@@ -30,9 +30,8 @@ public class AuthController {
     @PostMapping("/register")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    public UserOutDto addUser(@RequestBody UserInDto userInDto){
-        User user = userService.registerNewUserAccount(userInDto);
-        return userMapper.dtoFromModel(user);
+    public void addUser(@RequestBody UserInDto userInDto){
+        userService.registerNewUserAccount(userInDto);
     }
 
     @PostMapping("/login")
