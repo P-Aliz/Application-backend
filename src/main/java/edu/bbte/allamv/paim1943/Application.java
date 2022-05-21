@@ -16,13 +16,4 @@ public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
-
-    @Bean
-    public CommandLineRunner getCommandLineRunner (ApplicationContext ctx) {
-        return args -> {
-            for (User i: userRepository.findAll()) {
-                System.out.println(i);
-            }
-        };
-    }
 }
