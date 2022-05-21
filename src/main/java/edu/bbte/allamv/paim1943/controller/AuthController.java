@@ -37,7 +37,9 @@ public class AuthController {
     @PostMapping("/login")
     @ResponseBody
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void loginUser(@RequestBody UserInDto userInDto){
+    public UserOutDto loginUser(@RequestBody UserInDto userInDto){
         userService.loginExistingUser(userInDto);
+        User user = userMapper.getFromDto(userInDto);
+        return userMapper.dtoFromModel(user);
     }
 }
