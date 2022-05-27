@@ -34,4 +34,11 @@ public class PetOwingController {
     public void petPet(@PathVariable("owing_edge_id") String edge_id) {
         petOwingRepository.petPet("owing/"+edge_id);
     }
+
+    @GetMapping("/{user_id}/shop")
+    @ResponseBody
+    public Iterable<Pet> getUserShopElements(@PathVariable("user_id") String user_id) {
+        Iterable<Pet> pets = petOwingRepository.getShopPets("users/"+user_id);
+        return pets;
+    }
 }

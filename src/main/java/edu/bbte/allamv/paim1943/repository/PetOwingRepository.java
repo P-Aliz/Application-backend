@@ -34,5 +34,12 @@ public interface PetOwingRepository extends ArangoRepository<PetOwing, String> {
             "  FILTER o._id == @edge_id\n" +
             "  UPDATE o WITH { happynes_percenytage: MIN([o.happynes_percenytage + 10, 100]) } IN owing")
     void petPet(@Param("edge_id") String edge_id);
+
+    @Query("FOR pet IN pets\n" +
+            "  FILTER pet._id NOT IN (FOR pet2, owing IN OUTBOUND @userid owing RETURN pet2._id)\n" +
+            "  SORT pet.minim_point\n" +
+            "  RETURN pet\n" +
+            "  ")
+    Iterable<Pet> getShopPets(@Param("userid") String userid);
 }
 

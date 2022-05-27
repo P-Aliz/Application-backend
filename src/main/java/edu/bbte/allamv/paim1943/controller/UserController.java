@@ -6,15 +6,13 @@ import edu.bbte.allamv.paim1943.model.User;
 import edu.bbte.allamv.paim1943.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/users")
+@CrossOrigin(origins = "*")
 public class UserController {
     @Autowired
     private UserRepository userRepository;
@@ -38,5 +36,10 @@ public class UserController {
         return user;
     }
 
+    @PostMapping("/{id1}/addFriend/{id2}")
+    @ResponseBody
+    public void addFriend(@PathVariable("id1") String id1, @PathVariable("id2") String id2) {
+        userRepository.addFriend("users/"+id1, "users/"+id2);
+    }
 
 }
