@@ -10,4 +10,8 @@ import javax.validation.constraints.NotNull;
 @Valid
 public class UserOutDto {
     private String id;
+    private String email;
+    private Integer level;
+    private Integer all_points;
+    private Integer current_points;
 }

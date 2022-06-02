@@ -5,10 +5,13 @@ import com.arangodb.springframework.repository.ArangoRepository;
 import edu.bbte.allamv.paim1943.model.Pet;
 import edu.bbte.allamv.paim1943.model.PetOwing;
 import org.springframework.data.repository.query.Param;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
+@EnableScheduling
 public interface PetOwingRepository extends ArangoRepository<PetOwing, String> {
     @Query("FOR pet, owing IN OUTBOUND\n" +
             " @username owing\n" +
@@ -41,5 +44,20 @@ public interface PetOwingRepository extends ArangoRepository<PetOwing, String> {
             "  RETURN pet\n" +
             "  ")
     Iterable<Pet> getShopPets(@Param("userid") String userid);
+
+    @Scheduled(fixedDelay = 1)
+    @Query("FOR o in owing\n" +
+            "    update o with {food_percentage: o.food_percentage-1, happyness_percentage: o.happyness_percentage-1} in owing\n")
+    void lowerPercentageAll();
+
+
+    @Query("INSERT {\n" +
+            "    _from: @userid,\n" +
+            "    _to: @petid,\n" +
+            "    name: @name,\n" +
+            "    food_percentage: 100,\n" +
+            "    happyness_percentage: 100}\n" +
+            " INTO owing")
+    void buyPet(@Param("userid") String userid, @Param("petid") String petId, @Param("name") String name);
 }
 

@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/auth")
 @CrossOrigin
@@ -37,9 +39,9 @@ public class AuthController {
     @PostMapping("/login")
     @ResponseBody
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public UserOutDto loginUser(@RequestBody UserInDto userInDto){
+    public Optional<User> loginUser(@RequestBody UserInDto userInDto){
         userService.loginExistingUser(userInDto);
-        User user = userMapper.getFromDto(userInDto);
-        return userMapper.dtoFromModel(user);
+        Optional<User> user = userRepository.findById(userInDto.getId());
+        return user;
     }
 }

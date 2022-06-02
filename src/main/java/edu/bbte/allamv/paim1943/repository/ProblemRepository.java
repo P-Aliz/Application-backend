@@ -14,5 +14,19 @@ public interface ProblemRepository extends ArangoRepository<Problem, String> {
             " @lesson problemtolesson\n" +
             " RETURN problem")
     Iterable<Problem> getProblemsOfLesson(@Param("lesson") String username);
+
+
+    @Query("FOR problem in problems\n" +
+            "    FILTER problem.duel == true\n" +
+            "    SORT RAND()\n" +
+            "    LIMIT 1\n" +
+            "    RETURN problem")
+    Iterable<Problem> getRandomProblemDuel();
+
+    @Query("FOR problem in problems\n" +
+            "    SORT RAND()\n" +
+            "    LIMIT 1\n" +
+            "    return problem")
+    Iterable<Problem> getRandomProblem();
 }
 

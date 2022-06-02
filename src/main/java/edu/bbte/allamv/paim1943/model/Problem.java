@@ -17,5 +17,7 @@ public class Problem extends BaseEntity{
     private String description;
     private String answer;
     private Integer point;
+    private Boolean duel;
+    private String img;
 }
 

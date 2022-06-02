@@ -14,5 +14,12 @@ import lombok.NoArgsConstructor;
 public class User extends BaseEntity{
     private String password;
     private String email;
+    private Integer level;
+    private Integer all_points;
+    private Integer current_points;
+    private String avatar;
+    private Integer animal_nr;
+    private Integer badge_nr;
+    private Integer friends_nr;
 }
 
