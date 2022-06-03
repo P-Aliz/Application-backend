@@ -14,5 +14,7 @@ import lombok.NoArgsConstructor;
 public class Lesson extends BaseEntity{
     private String title;
     private String description;
+    private String url;
+    private Boolean hasProblem;
 }
 

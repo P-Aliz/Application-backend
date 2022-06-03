@@ -23,7 +23,7 @@ public interface PetOwingRepository extends ArangoRepository<PetOwing, String> {
             "    pet_point: pet.pet_point,\n" +
             "    name: owing.name,\n" +
             "    food_percentage: owing.food_percentage,\n" +
-            "    happynes_percenytage: owing.happynes_percenytage,\n" +
+            "    happyness_percentage: owing.happyness_percentage,\n" +
             "    edge_id: owing._id\n"+
             " }")
     Iterable<PetOwing> getPetsUser(@Param("username") String username);
@@ -35,7 +35,7 @@ public interface PetOwingRepository extends ArangoRepository<PetOwing, String> {
 
     @Query("FOR o IN owing\n" +
             "  FILTER o._id == @edge_id\n" +
-            "  UPDATE o WITH { happynes_percenytage: MIN([o.happynes_percenytage + 10, 100]) } IN owing")
+            "  UPDATE o WITH { happyness_percentage: MIN([o.happyness_percentage + 10, 100]) } IN owing")
     void petPet(@Param("edge_id") String edge_id);
 
     @Query("FOR pet IN pets\n" +

@@ -84,7 +84,6 @@ public class UserController {
     }
 
     @PutMapping("/{id}/removepoint")
-    @ResponseBody
     public void removePoint(@PathVariable("id") String id, @RequestBody Integer point) {
         userRepository.removePoint("users/"+id, point);
     }

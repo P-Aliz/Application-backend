@@ -19,6 +19,6 @@ public class PetOwing extends BaseRelation{
     private Integer pet_point;
     private String name;
     private Integer food_percentage;
-    private Integer happynes_percenytage;
+    private Integer happyness_percentage;
 }
 
