@@ -6,16 +6,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@Document("lessons")
+@Document("requestlessons")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Lesson extends BaseEntity{
+public class RequestLesson extends BaseEntity{
     private String title;
-    private String description;
-    private String url;
-    private Boolean hasProblem;
-    private String img;
+    private String requester;
 }
-

@@ -10,9 +10,8 @@ import org.springframework.data.annotation.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class BaseRelation {
+public class BaseRelation extends BaseEntity{
+    private String _to;
+    private String _from;
     private String edge_id;
-
-    /*@com.arangodb.springframework.annotation.ArangoId
-    private String _to;*/
 }

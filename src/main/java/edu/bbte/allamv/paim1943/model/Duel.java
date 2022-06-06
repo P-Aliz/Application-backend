@@ -13,9 +13,7 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Duel extends BaseEntity{
-    private String _from;
-    private String _to;
+public class Duel extends BaseRelation{
     private Long date;
     private Boolean happened;
     private String winner;

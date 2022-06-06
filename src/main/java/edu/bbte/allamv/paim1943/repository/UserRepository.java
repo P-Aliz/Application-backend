@@ -47,5 +47,11 @@ public interface UserRepository extends ArangoRepository<User, String> {
             " SORT RAND()\n" +
             " RETURN DISTINCT user")
     Iterable<User> getFriends(@Param("username") String username);
+
+    @Query("LET doc = DOCUMENT(@username)\n" +
+            "UPDATE doc WITH {\n" +
+            "  resolvedproblems: APPEND(doc.resolvedproblems, [@problem], true)\n" +
+            "} IN users")
+    void resolveProblem(@Param("username") String username, @Param("problem") String problem);
 }
 

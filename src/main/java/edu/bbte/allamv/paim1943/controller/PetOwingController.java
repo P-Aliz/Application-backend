@@ -8,6 +8,7 @@ import edu.bbte.allamv.paim1943.repository.PetRepository;
 import edu.bbte.allamv.paim1943.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -47,12 +48,16 @@ public class PetOwingController {
         return pets;
     }
 
+    @Transactional
     @PostMapping("/{user_id}/addpet")
     @ResponseBody
     public void addAnimalToUser(@PathVariable("user_id") String user_id, @RequestBody PetOwing pet) {
         petOwingRepository.buyPet("users/"+user_id, "pets/"+pet.getPet_id(), pet.getName());
         User user = userRepository.findById("users/"+user_id).orElse(null);
-        user.setAnimal_nr(user.getAnimal_nr()+1);
+        Integer animal_nr = user.getAnimal_nr();
+        if(animal_nr == null) animal_nr = 0;
+        user.setAnimal_nr(animal_nr+1);
+        user.setCurrent_points(user.getCurrent_points() - pet.getMinim_point());
         userRepository.save(user);
     }
 }

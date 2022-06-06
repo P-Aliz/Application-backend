@@ -28,5 +28,7 @@ public interface ProblemRepository extends ArangoRepository<Problem, String> {
             "    LIMIT 1\n" +
             "    return problem")
     Iterable<Problem> getRandomProblem();
+
+
 }
 

@@ -28,6 +28,9 @@ public class DuelController {
     @Autowired
     private ProblemRepository problemRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @PostMapping
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
@@ -66,5 +69,11 @@ public class DuelController {
     @ResponseBody
     public Optional<Duel> getDuelById(@PathVariable("id") String id) {
         return duelRepository.findById("duels/"+id);
+    }
+
+    @PutMapping("/{id}/win/{userid}")
+    @ResponseBody
+    public void setDuelWinner(@PathVariable("id") String id, @PathVariable("userid") String userid) {
+        duelRepository.setDuelWinner(userid, "duels/"+ id);
     }
 }

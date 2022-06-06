@@ -29,5 +29,9 @@ public interface DuelRepository extends ArangoRepository<Duel, String> {
             "    duel\n" )
     Iterable<Duel> getDuelInvitatedLast(@Param("username") String username);
 
-
+    @Query("LET doc = DOCUMENT(@duelid)\n" +
+            "UPDATE doc WITH {\n" +
+            "  winner: @username\n"+
+            "} IN duels")
+    void setDuelWinner(@Param("username") String username, @Param("duelid") String duelid);
 }

@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Document("users")
 @Data
 @AllArgsConstructor
@@ -21,5 +23,7 @@ public class User extends BaseEntity{
     private Integer animal_nr;
     private Integer badge_nr;
     private Integer friends_nr;
+    private List<String> resolvedproblems;
+    private Boolean admin;
 }
 

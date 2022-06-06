@@ -3,11 +3,13 @@ package edu.bbte.allamv.paim1943.controller;
 import edu.bbte.allamv.paim1943.controller.exception.NotFoundException;
 import edu.bbte.allamv.paim1943.mapper.UserMapper;
 import edu.bbte.allamv.paim1943.model.Duel;
+import edu.bbte.allamv.paim1943.model.Problem;
 import edu.bbte.allamv.paim1943.model.User;
 import edu.bbte.allamv.paim1943.repository.DuelRepository;
 import edu.bbte.allamv.paim1943.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -79,13 +81,22 @@ public class UserController {
 
     @PutMapping("/{id}/addpoint")
     @ResponseBody
-    public void addPoint(@PathVariable("id") String id, @RequestBody Integer point) {
+    public void addPoint(@PathVariable("id") String id, @RequestParam(name = "point") Integer point) {
         userRepository.addPoint("users/"+id, point);
     }
 
     @PutMapping("/{id}/removepoint")
-    public void removePoint(@PathVariable("id") String id, @RequestBody Integer point) {
+    @ResponseBody
+    public void removePoint(@PathVariable("id") String id, @RequestParam(name = "point") Integer point) {
         userRepository.removePoint("users/"+id, point);
     }
 
+    @Transactional
+    @PutMapping("/{id}/resolveproblem")
+    @ResponseBody
+    public void resolveProblem(@PathVariable("id") String id, @RequestBody Problem problem) {
+        System.out.println("came here");
+        userRepository.addPoint("users/"+id, problem.getPoint());
+        userRepository.resolveProblem("users/"+id, problem.getId());
+    }
 }

@@ -45,7 +45,7 @@ public interface PetOwingRepository extends ArangoRepository<PetOwing, String> {
             "  ")
     Iterable<Pet> getShopPets(@Param("userid") String userid);
 
-    @Scheduled(fixedDelay = 1)
+    @Scheduled(fixedDelay = 3600000)
     @Query("FOR o in owing\n" +
             "    update o with {food_percentage: o.food_percentage-1, happyness_percentage: o.happyness_percentage-1} in owing\n")
     void lowerPercentageAll();
