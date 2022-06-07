@@ -25,5 +25,6 @@ public class User extends BaseEntity{
     private Integer friends_nr;
     private List<String> resolvedproblems;
     private Boolean admin;
+    private List<String> badges;
 }
 
