@@ -26,4 +26,10 @@ public class RequestProblemController {
     public void addRequest(@RequestBody RequestProblem newRequest){
         requestProblemRepository.save(newRequest);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public void deleteRequest(@PathVariable("id") String id) {
+        requestProblemRepository.deleteById("requestproblems/"+id);
+    }
 }

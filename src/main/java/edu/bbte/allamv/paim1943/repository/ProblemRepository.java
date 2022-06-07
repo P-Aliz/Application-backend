@@ -15,6 +15,10 @@ public interface ProblemRepository extends ArangoRepository<Problem, String> {
             " RETURN problem")
     Iterable<Problem> getProblemsOfLesson(@Param("lesson") String username);
 
+    @Query("INSERT {" +
+            "_from: @problem, _to:@lesson" +
+            "} into problemtolesson")
+    void setProblemsOfLesson(@Param("lesson") String lesson, @Param("problem") String problem);
 
     @Query("FOR problem in problems\n" +
             "    FILTER problem.duel == true\n" +

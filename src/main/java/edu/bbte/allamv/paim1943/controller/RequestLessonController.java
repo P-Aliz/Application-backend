@@ -30,4 +30,10 @@ public class RequestLessonController {
     public void addRequest(@RequestBody RequestLesson newRequest){
         requestLessonRepository.save(newRequest);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public void deleteRequest(@PathVariable("id") String id) {
+        requestLessonRepository.deleteById("requestlessons/"+id);
+    }
 }
