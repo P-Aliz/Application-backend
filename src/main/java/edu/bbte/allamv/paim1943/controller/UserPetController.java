@@ -1,15 +1,10 @@
 package edu.bbte.allamv.paim1943.controller;
 
-import edu.bbte.allamv.paim1943.controller.exception.NotFoundException;
 import edu.bbte.allamv.paim1943.model.Pet;
 import edu.bbte.allamv.paim1943.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/usersxxxx")

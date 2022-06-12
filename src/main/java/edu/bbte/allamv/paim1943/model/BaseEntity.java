@@ -1,6 +1,5 @@
 package edu.bbte.allamv.paim1943.model;
 
-import com.arangodb.springframework.annotation.ArangoId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

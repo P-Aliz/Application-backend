@@ -1,9 +1,7 @@
 package edu.bbte.allamv.paim1943.controller;
 
 import edu.bbte.allamv.paim1943.controller.exception.NotFoundException;
-import edu.bbte.allamv.paim1943.model.Lesson;
 import edu.bbte.allamv.paim1943.model.Problem;
-import edu.bbte.allamv.paim1943.repository.LessonRepository;
 import edu.bbte.allamv.paim1943.repository.ProblemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

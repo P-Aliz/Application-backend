@@ -4,7 +4,6 @@ import edu.bbte.allamv.paim1943.model.Pet;
 import edu.bbte.allamv.paim1943.model.PetOwing;
 import edu.bbte.allamv.paim1943.model.User;
 import edu.bbte.allamv.paim1943.repository.PetOwingRepository;
-import edu.bbte.allamv.paim1943.repository.PetRepository;
 import edu.bbte.allamv.paim1943.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

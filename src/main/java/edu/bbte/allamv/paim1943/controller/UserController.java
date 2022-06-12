@@ -1,6 +1,7 @@
 package edu.bbte.allamv.paim1943.controller;
 
 import edu.bbte.allamv.paim1943.controller.exception.NotFoundException;
+import edu.bbte.allamv.paim1943.dto.UserOutDto;
 import edu.bbte.allamv.paim1943.mapper.UserMapper;
 import edu.bbte.allamv.paim1943.model.Duel;
 import edu.bbte.allamv.paim1943.model.Problem;
@@ -35,12 +36,12 @@ public class UserController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public Optional<User> findById(@PathVariable("id") String id) throws NotFoundException {
+    public UserOutDto findById(@PathVariable("id") String id) throws NotFoundException {
         Optional<User> user = userRepository.findById(id);
         if (user == null) {
             throw new NotFoundException();
         }
-        return user;
+        return userMapper.dtoFromModel(user);
     }
 
     @GetMapping("/{id}/duel")
@@ -63,13 +64,13 @@ public class UserController {
 
     @GetMapping("/top")
     @ResponseBody
-    public Iterable<User> getTops() {
+    public Iterable<UserOutDto> getTops() {
         return userRepository.getTop();
     }
 
     @GetMapping("/{id}/friends")
     @ResponseBody
-    public Iterable<User> getFriends(@PathVariable("id") String id) {
+    public Iterable<UserOutDto> getFriends(@PathVariable("id") String id) {
         return userRepository.getFriends("users/"+id);
     }
 

@@ -1,9 +1,5 @@
 package edu.bbte.allamv.paim1943.controller;
-
-import edu.bbte.allamv.paim1943.controller.exception.NotFoundException;
-import edu.bbte.allamv.paim1943.controller.exception.Unauthorized;
 import edu.bbte.allamv.paim1943.dto.UserInDto;
-import edu.bbte.allamv.paim1943.dto.UserOutDto;
 import edu.bbte.allamv.paim1943.mapper.UserMapper;
 import edu.bbte.allamv.paim1943.model.User;
 import edu.bbte.allamv.paim1943.repository.UserRepository;

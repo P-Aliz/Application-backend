@@ -15,8 +15,4 @@ public abstract class UserMapper {
     public abstract UserOutDto dtoFromModel(User user);
 
     public abstract UserOutDto dtoFromModel(Optional<User> user);
-
-    /*@IterableMapping(elementTargetType = ChefOutDto.class)
-    public abstract Collection<ChefOutDto> dtosFromModels(Collection<Chef> chefs);*/
-
 }

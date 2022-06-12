@@ -2,6 +2,7 @@ package edu.bbte.allamv.paim1943.repository;
 
 import com.arangodb.springframework.annotation.Query;
 import com.arangodb.springframework.repository.ArangoRepository;
+import edu.bbte.allamv.paim1943.dto.UserOutDto;
 import edu.bbte.allamv.paim1943.model.Pet;
 import edu.bbte.allamv.paim1943.model.User;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +21,7 @@ public interface UserRepository extends ArangoRepository<User, String> {
             "    sort user.level desc, user.all_points desc\n" +
             "    limit 5\n" +
             "    return user")
-    Iterable<User> getTop();
+    Iterable<UserOutDto> getTop();
 
     @Query("FOR user IN  users\n" +
             "  FILTER user._id == @username\n" +
@@ -40,13 +41,13 @@ public interface UserRepository extends ArangoRepository<User, String> {
             "  UPDATE user WITH {\n" +
             "    current_points: user.current_points-@point,\n" +
             "    } in users" )
-    User removePoint(@Param("username") String username, @Param("point") Integer point);
+    UserOutDto removePoint(@Param("username") String username, @Param("point") Integer point);
 
     @Query("FOR user, friends IN ANY\n" +
             " @username friends\n" +
             " SORT RAND()\n" +
             " RETURN DISTINCT user")
-    Iterable<User> getFriends(@Param("username") String username);
+    Iterable<UserOutDto> getFriends(@Param("username") String username);
 
     @Query("LET doc = DOCUMENT(@username)\n" +
             "UPDATE doc WITH {\n" +

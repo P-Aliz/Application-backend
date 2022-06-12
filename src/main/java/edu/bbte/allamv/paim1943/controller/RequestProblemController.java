@@ -1,8 +1,6 @@
 package edu.bbte.allamv.paim1943.controller;
 
-import edu.bbte.allamv.paim1943.model.RequestLesson;
 import edu.bbte.allamv.paim1943.model.RequestProblem;
-import edu.bbte.allamv.paim1943.repository.RequestLessonRepository;
 import edu.bbte.allamv.paim1943.repository.RequestProblemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
