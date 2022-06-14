@@ -44,6 +44,12 @@ public class UserController {
         return userMapper.dtoFromModel(user);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public void deleteById(@PathVariable("id") String id) throws NotFoundException {
+        userRepository.deleteById(id);
+    }
+
     @GetMapping("/{id}/duel")
     @ResponseBody
     public Iterable<Duel> findDuel(@PathVariable("id") String id) throws NotFoundException {
@@ -96,8 +102,29 @@ public class UserController {
     @PutMapping("/{id}/resolveproblem")
     @ResponseBody
     public void resolveProblem(@PathVariable("id") String id, @RequestBody Problem problem) {
-        System.out.println("came here");
         userRepository.addPoint("users/"+id, problem.getPoint());
         userRepository.resolveProblem("users/"+id, problem.getId());
+    }
+
+    @PostMapping("/{id}/moderator")
+    @ResponseBody
+    public void setModerator(@PathVariable("id") String id) {
+        User user = userRepository.findById("users/"+id).orElse(null);
+        if(user==null) {
+            throw new NotFoundException();
+        }
+        user.setModerator(true);
+        userRepository.save(user);
+    }
+
+    @PostMapping("/{id}/user")
+    @ResponseBody
+    public void setUser(@PathVariable("id") String id) {
+        User user = userRepository.findById("users/"+id).orElse(null);
+        if(user==null) {
+            throw new NotFoundException();
+        }
+        user.setModerator(false);
+        userRepository.save(user);
     }
 }
