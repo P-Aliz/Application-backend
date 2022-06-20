@@ -45,14 +45,32 @@ public interface UserRepository extends ArangoRepository<User, String> {
 
     @Query("FOR user, friends IN ANY\n" +
             " @username friends\n" +
+            " filter friends.happened!= false\n" +
             " SORT RAND()\n" +
             " RETURN DISTINCT user")
     Iterable<UserOutDto> getFriends(@Param("username") String username);
+
+    @Query("FOR user, friends IN INBOUND\n" +
+            " @username friends\n" +
+            " filter friends.happened== false\n" +
+            " SORT RAND()\n" +
+            " RETURN DISTINCT user")
+    Iterable<UserOutDto> getFriendRequests(@Param("username") String username);
 
     @Query("LET doc = DOCUMENT(@username)\n" +
             "UPDATE doc WITH {\n" +
             "  resolvedproblems: APPEND(doc.resolvedproblems, [@problem], true)\n" +
             "} IN users")
     void resolveProblem(@Param("username") String username, @Param("problem") String problem);
+
+    @Query("FOR user IN 2..6 ANY\n" +
+            "@username friends\n" +
+            "FILTER user._id NOT IN (\n" +
+            "FOR user2 IN ANY\n" +
+            "@username friends\n" +
+            "return user2._id\n" +
+            ")\n" +
+            "RETURN DISTINCT user")
+    Iterable<UserOutDto> getRecommendedFriends(@Param("username") String username);
 }
 

@@ -28,6 +28,15 @@ public interface DuelRepository extends ArangoRepository<Duel, String> {
             "    duel\n" )
     Iterable<Duel> getDuelInvitatedLast(@Param("username") String username);
 
+    @Query("FOR user,duel IN OUTBOUND\n" +
+            " @username duels\n" +
+            " FILTER duel.date < DATE_NOW()-120000 && duel.accepted==true\n" +
+            " SORT duel.date DESC\n" +
+            " LIMIT 5\n" +
+            " RETURN \n" +
+            "    duel\n" )
+    Iterable<Duel> getMissedDuels(@Param("username") String username);
+
     @Query("LET doc = DOCUMENT(@duelid)\n" +
             "UPDATE doc WITH {\n" +
             "  winner: @username\n"+
