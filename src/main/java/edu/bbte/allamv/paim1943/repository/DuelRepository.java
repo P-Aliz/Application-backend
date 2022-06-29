@@ -32,7 +32,7 @@ public interface DuelRepository extends ArangoRepository<Duel, String> {
             " @username duels\n" +
             " FILTER duel.date < DATE_NOW()-120000 && duel.accepted==true\n" +
             " SORT duel.date DESC\n" +
-            " LIMIT 5\n" +
+            " LIMIT 3\n" +
             " RETURN \n" +
             "    duel\n" )
     Iterable<Duel> getMissedDuels(@Param("username") String username);

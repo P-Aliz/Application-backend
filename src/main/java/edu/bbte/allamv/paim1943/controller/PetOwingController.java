@@ -5,6 +5,7 @@ import edu.bbte.allamv.paim1943.model.PetOwing;
 import edu.bbte.allamv.paim1943.model.User;
 import edu.bbte.allamv.paim1943.repository.PetOwingRepository;
 import edu.bbte.allamv.paim1943.repository.UserRepository;
+import edu.bbte.allamv.paim1943.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 public class PetOwingController {
     @Autowired
     private PetOwingRepository petOwingRepository;
+
+    @Autowired
+    private PetRepository petRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -50,13 +54,19 @@ public class PetOwingController {
     @Transactional
     @PostMapping("/{user_id}/addpet")
     @ResponseBody
-    public void addAnimalToUser(@PathVariable("user_id") String user_id, @RequestBody PetOwing pet) {
-        petOwingRepository.buyPet("users/"+user_id, "pets/"+pet.getPet_id(), pet.getName());
+    public Integer addAnimalToUser(@PathVariable("user_id") String user_id, @RequestBody PetOwing pet) {
+        Pet pet2 = petRepository.findById("pets/" + pet.getPet_id()).orElse(null);
+        petOwingRepository.buyPet("users/"+user_id, "pets/" + pet.getPet_id(), pet.getName());
         User user = userRepository.findById("users/"+user_id).orElse(null);
         Integer animal_nr = user.getAnimal_nr();
         if(animal_nr == null) animal_nr = 0;
         user.setAnimal_nr(animal_nr+1);
-        user.setCurrent_points(user.getCurrent_points() - pet.getMinim_point());
+        user.setCurrent_points(user.getCurrent_points() - pet2.getMinim_point());
+        System.out.println(user);
         userRepository.save(user);
+        return user.getAnimal_nr();
     }
+
+
+
 }

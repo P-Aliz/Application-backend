@@ -2,13 +2,11 @@ package edu.bbte.allamv.paim1943.controller;
 
 import edu.bbte.allamv.paim1943.controller.exception.NotFoundException;
 import edu.bbte.allamv.paim1943.model.Pet;
+import edu.bbte.allamv.paim1943.repository.PetOwingRepository;
 import edu.bbte.allamv.paim1943.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -18,6 +16,8 @@ public class PetController {
     @Autowired
     private PetRepository petRepository;
 
+    @Autowired
+    private PetOwingRepository petOwingRepository;
 
     @GetMapping
     @ResponseBody
@@ -33,5 +33,11 @@ public class PetController {
             throw new NotFoundException();
         }
         return pet;
+    }
+
+    @PostMapping("/goback")
+    @ResponseBody
+    public void goBack(){
+        petOwingRepository.lowerPercentageAll();
     }
 }

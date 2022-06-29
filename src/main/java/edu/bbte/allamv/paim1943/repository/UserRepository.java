@@ -3,6 +3,7 @@ package edu.bbte.allamv.paim1943.repository;
 import com.arangodb.springframework.annotation.Query;
 import com.arangodb.springframework.repository.ArangoRepository;
 import edu.bbte.allamv.paim1943.dto.UserOutDto;
+import edu.bbte.allamv.paim1943.model.Friend;
 import edu.bbte.allamv.paim1943.model.Pet;
 import edu.bbte.allamv.paim1943.model.User;
 import org.springframework.data.repository.query.Param;
@@ -54,8 +55,8 @@ public interface UserRepository extends ArangoRepository<User, String> {
             " @username friends\n" +
             " filter friends.happened== false\n" +
             " SORT RAND()\n" +
-            " RETURN DISTINCT user")
-    Iterable<UserOutDto> getFriendRequests(@Param("username") String username);
+            " RETURN DISTINCT friends")
+    Iterable<Friend> getFriendRequests(@Param("username") String username);
 
     @Query("LET doc = DOCUMENT(@username)\n" +
             "UPDATE doc WITH {\n" +

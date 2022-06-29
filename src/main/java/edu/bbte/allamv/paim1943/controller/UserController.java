@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -169,7 +171,44 @@ public class UserController {
 
     @GetMapping("/{id}/notifications")
     @ResponseBody
-    public Iterable<UserOutDto> getNotifications(@PathVariable("id") String id) {
+    public Iterable<Friend> getNotifications(@PathVariable("id") String id) {
         return userRepository.getFriendRequests("users/"+id);
+    }
+
+    @PutMapping("/{id}/notifications/{notificationId}")
+    @ResponseBody
+    public Integer acceptFriend(@PathVariable("id") String id, @PathVariable("notificationId") String idnot, @RequestParam(name = "accepted") Boolean accept) {
+        Friend friend = friendRepository.findById("friends/"+idnot).orElse(null);
+        if(accept==true) {
+            friend.setHappened(true);
+            friendRepository.save(friend);
+            User user = userRepository.findById("users/"+id).orElse(null);
+            user.setFriends_nr(user.getFriends_nr()+1);
+            return user.getFriends_nr();
+        } else {
+            friendRepository.deleteById("friends/"+idnot);
+            return 0;
+        }
+    }
+
+    @PostMapping("/{id}/badges/{badgename}")
+    @ResponseBody
+    public void addBadge(@PathVariable("id") String id, @PathVariable("badgename") String badgeName) {
+        User user = userRepository.findById("users/"+id).orElse(null);
+        if(user==null) throw new NotFoundException();
+        List<String> badges = user.getBadges();
+        if(badges == null) badges = new ArrayList<>();
+        badges.add(badgeName);
+        user.setBadges(badges);
+        user.setBadge_nr(user.getBadge_nr()+1);
+        userRepository.save(user);
+    }
+
+    @GetMapping("/{id}/badges")
+    @ResponseBody
+    public List<String> getBadges(@PathVariable("id") String id){
+        User user = userRepository.findById("users/"+id).orElse(null);
+        if(user==null) throw new NotFoundException();
+        return user.getBadges();
     }
 }
